@@ -1,0 +1,235 @@
+/* Pacman CSS */
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Roboto:wght@500&display=swap');
+
+html{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    min-height: 105vh;
+    color: rgb(255,250, 250);
+}
+
+body{
+    background-color: #4B4B4C;
+}
+
+/* button{
+    box-shadow: 3px 3px rgb(0, 0, 0, 0.441);
+    background-color: #ffe5b4; 
+} */
+
+h1{
+    font-family: 'Luckiest Guy', cursive;
+}
+
+.github{
+    color: white;
+    font-size: 3em;
+}
+
+.top-page{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.grid{
+    display: flex;
+    flex-wrap: wrap;
+    width: 840px;
+    height: 840px;
+    border: 4px solid white;
+} 
+
+.grid div{
+    width: 30px;
+    height: 30px;
+}
+
+.pac-dot{
+    background-color: rgb(255, 195, 11);
+    border: 10px solid #4B4B4C;
+    box-sizing: border-box;
+}
+
+.wall{
+    background-color: #B3E5FC;
+}
+
+.power-pellet{
+    background-color: rgb(89, 182, 91);
+    border-radius: 20px;
+}
+
+/* GHOST */
+    /* Body */
+.ghost {
+    height: 70px;
+    width: 60px;
+    border-top-left-radius: 70px;
+    border-top-right-radius: 70px;
+    /* animation: moveForward 5s linear infinite, colorSwap 0.5s linear infinite; */
+  }
+  
+    /*****NOTE TO SELF: Eyes and pupils have a problem when top and left are used. */
+    /* using these for eyes */
+    /* .ghost::before, .ghost::after {
+      content: "";
+      position: absolute;
+      background: white;
+      height: 10px;
+      width: 8px;
+      border-radius: 100%;
+      top: 500px;
+      left: 4px;
+    }
+
+    .ghost::after {
+      left: 18px;
+    } */
+
+    /* Pupils */
+  /* .eyes::before, .eyes::after {
+    content: "";
+    position: absolute;
+    background: blue;
+    height: 5px;
+    width: 5px;
+    border-radius: 100%;
+    top: 25px;
+    left: 4px;
+    z-index: 99;
+    animation: peeperLeft 0.7s linear infinite;
+  }
+
+    .eyes::after {
+      left: 30px;
+      animation: peeperRight 0.7s linear infinite;
+    } */
+
+  /* .skirt {
+    position: absolute;
+    height: 0;
+    width: 0;
+    border: solid 10px #333;
+    border-top-color: transparent;
+    bottom: -10px;
+  } */
+    /* .skirt::after, .skirt::before {
+      content: "";
+      position: absolute;
+      height: 0;
+      width: 0;
+      border: solid 10px #333;
+      border-top-color: transparent;
+      bottom: -10px;
+      left: 10px;
+    }
+    .skirt::after {
+      border-color: #333;
+      border-top-color: transparent;
+      bottom: -10px;
+      left: 30px;
+    } */
+
+.blinky{
+    background-color: red;
+    border: 0px;
+}
+
+.pinky{
+    background-color: pink;
+    border: 0px;
+}
+
+.inky{
+    background-color: cyan; 
+    border: 0px;
+}
+
+.clyde{
+    background-color: orange;
+    border: 0px;
+}
+
+.scared-ghost{
+    background-color: aquamarine;
+    border: 0px;
+}
+
+/* PACMAN */
+.pac-man{
+    animation-delay: 0.8s;
+}
+
+    .pac-man::before, .pac-man::after {
+        content: "";
+        display: block;
+        height: 0;
+        width: 0;
+        position: absolute;
+        border: solid 15px yellow;
+        border-radius: 50%;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        animation: mouthTop 0.7s ease infinite;
+  }
+
+    .pac-man::after {
+        border-color: yellow;
+        border-right-color: transparent;
+        border-top-color: transparent;
+        animation: mouthBottom 0.7s ease infinite;
+  }
+
+
+.reset {
+    background-color: pink;
+}
+
+.score{
+    background-color: rgb(255,250, 250);
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    font-size: 12px;
+}
+
+
+/* /////////////////////////////////////////////////////////////////// */
+/* Key Frames */
+    
+@keyframes mouthTop {
+  50% {
+    transform: rotate(40deg);
+  }
+}
+
+@keyframes mouthBottom {
+ 50% {
+   transform: rotate(-40deg);
+  }
+}
+    
+      /* @keyframes peeperLeft {
+        0%, 100% {
+          left: 5px;
+        }
+        50% {
+          left: 10px;
+        }
+      }
+    
+      @keyframes peeperRight {
+        0%, 100% {
+          left: 30px;
+        }
+    }
+
+      @keyframes colorSwap {
+        50% {
+        background: hotpink;
+        }
+    } */

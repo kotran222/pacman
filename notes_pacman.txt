@@ -1,0 +1,24 @@
+Pacman Notes
+
+August 15th 2020 | K.T.
+    Map is nice and unique, scoreboard works
+
+    Successfully animated pacman mouth
+        Needs to learn how to face North, West, and South and not constantly East depending on what arrow key is pressed...
+    
+    Ghost is hard to animate
+        Need to make eyes/pupils
+        Need to make the ghost skirt 
+
+    Investigate power pellet 
+        Can kill one ghost, second ghost that is afraid is not eaten when Pac-man reaches it?...
+
+    ***ALGORITHM
+    Need to improve ghost algorithm 
+        (1) Scatter: run away from pac-man for short period of time to a specific corner in the map
+        (2) Chase: chase pac-man for a good deal of time
+        (3) Region Awareness: one ghost at each corner 
+        (4) Can Ghost go through the tunnel?
+        (5) Ghost stuck on corners. 
+
+    
