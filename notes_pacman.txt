@@ -2,6 +2,7 @@ Pacman Notes
 
 August 15th 2020 | K.T.
     Map is nice and unique, scoreboard works
+        Could add audio and arcade pacman music in the future?
 
     Successfully animated pacman mouth
         Needs to learn how to face North, West, and South and not constantly East depending on what arrow key is pressed...
@@ -20,5 +21,13 @@ August 15th 2020 | K.T.
         (3) Region Awareness: one ghost at each corner 
         (4) Can Ghost go through the tunnel?
         (5) Ghost stuck on corners. 
+
+        Blinky: Dijkstra's???
+        https://www.youtube.com/watch?v=ZXzkppr6TVs
+
+August 16th 2020 | K.T.
+        Need to fix function nodeWeightFinderAllDirections(nodeSource) 
+        The Up portion works fine. 
+        Horizontal is having issues...
 
     
