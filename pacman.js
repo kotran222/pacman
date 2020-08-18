@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const minIndex = 0; 
     const maxIndex = 783;
 
+    //Corner of the maps
+    const topLeftCornerLocation = 29; //Pinky
+
     //Legend
     // 0 - pac-dot
     // 1 - wall
@@ -43,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1,
         1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,
         1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
     ];
 
@@ -78,8 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
     createBoard();
 
     //starting position of pac-man
-    //let pacmanCurrentIndex = 490;
-    //let pacmanCurrentIndex = 391;
+    let pacmanCurrentIndex = 742;
+    //let pacmanCurrentIndex = 293;
 
     squares[pacmanCurrentIndex].classList.add('pac-man');
 
@@ -175,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
             this.startIndex = startIndex;
             this.speed = speed;
             this.currentIndex = startIndex;
-            this.destination = (-1, -1);
             // this.moving = false;
             this.chaseBehavior = chaseBehavior; //chaseBehavior = chaseAggressive, chaseAmbush, chasePatrol, or chaseRandom
             this.scatterBehavior = scatterBehavior;   //scatterBehavior = scatterTopLeftCorner, scatterTopRightCorner, scatterBottomLeftCorner, or scatterBottomRightCorner
@@ -187,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //all the ghosts
     ghosts = [
-        new Ghost('blinky', 351, 250, 'chaseAggressive', 'scatterTopRightCorner'),
-        new Ghost('pinky', 348, 400, 'chaseAmbush', 'scatterTopLeftCorner'),
+        new Ghost('blinky', 351, 500, 'chaseAggressive', 'scatterTopRightCorner'),
+        new Ghost('pinky', 348, 600, 'chaseAmbush', 'scatterTopLeftCorner'),
         new Ghost('inky', 435, 300, 'chasePatrol', 'scatterBottomRightCorner'),
         new Ghost('clyde', 432, 500, 'chaseRandom', 'scatterBottomLeftCorner')  
     ];
@@ -209,147 +211,10 @@ document.addEventListener('DOMContentLoaded', () => {
         * index = 490
         * x-coor: 490 % 28 = 14 since 28*17=476. --> 490-476=14. Therefore, x = 14 
         * y-coor: 490 / 28 = 17.5 --> floor = 17. Therfore, y = 17.
-        * /
+        * 
+        */
 
 
-    //All Ghosts can move
-    // ghosts.forEach(ghost => moveGhost(ghost));
-
-    // //Ghost Move Function
-    // function moveGhost(ghost){
-    //     const directions = [-1, +1, +width, -width];
-    //     let direction = directions[Math.floor(Math.random() * directions.length)];
-
-    //     ghost.timerId = setInterval(function(){
-    //         // console.log(ghost.currentIndex); ************
-    //         //Ghost in chase mode
-    //         if(ghost.behavior === 1){
-    //             //if the next square your ghost is going to do in does NOT contain a wall and a ghost, you can go there.
-    //             if(!squares[ghost.currentIndex + direction].classList.contains('wall')
-    //             && !squares[ghost.currentIndex + direction].classList.contains('ghost') ){
-    //                 //remove all ghost related classes
-    //                 squares[ghost.currentIndex].classList.remove(ghost.className);
-    //                 squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
-
-    //                 //check if the new space is closer
-    //                 const [pacmanX, pacmanY] = getCoordinates(pacmanCurrentIndex);
-    //                 const [ghostX, ghostY] = getCoordinates(ghost.currentIndex);
-                    
-    //                 const possibleMoves = [
-    //                     [ghostX - 1, ghostY],
-    //                     [ghostX + 1, ghostY],
-    //                     [ghostX, ghostY - 1],
-    //                     [ghostX, ghostY + 1],
-    //                 ];
-            
-    //                 /* sort by distance from Pac-man */
-    //                 possibleMoves.sort(function (a, b) {
-    //                     var aD = dist(a.x, a.y, pacman.x, pacman.y);
-    //                     var bD = dist(b.x, b.y, pacman.x, pacman.y);
-    //                     return aD - bD;
-    //                 });
-    //                 for(var i = 0; i < possibleMoves.length; i++){
-    //                     ghost.destination = createVector(possibleMoves[i].x, possibleMoves[i].y);
-    //                 }
-
-    //                                 function isXCoordCloser(){
-    //                 if((ghostNewX - pacmanX) > (ghostX - pacmanX)){
-    //                     return true;
-    //                 }else{
-    //                     return false;
-    //                 }
-    //             }
-
-    //             function isYCoordCloser(){
-    //                 if((ghostNewY - pacmanY) > (ghostY - pacmanY)){
-    //                     return true;
-    //                 }else{
-    //                     return false;
-    //                 }
-    //             }
-
-    //             if( isXCoordCloser() || isYCoordCloser() ){
-    //                 //change the current index to the new safe square
-    //                 ghost.currentIndex += direction;
-    //                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-    //             }else{
-    //                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-    //                 direction = directions[Math.floor(Math.random() * directions.length)];
-    //             }
-    //             }//might need an else to rotate away from corners or dead ends ******
-
-    //         //Ghost in Scatter Mode
-    //         }else if(ghost.behavior === 0){
-    //             //if the next square your ghost is going to do in does NOT contain a wall and a ghost, you can go there.
-    //             if(!squares[ghost.currentIndex + direction].classList.contains('wall')
-    //             && !squares[ghost.currentIndex + direction].classList.contains('ghost') ){
-    //                 //remove all ghost related classes
-    //                 squares[ghost.currentIndex].classList.remove(ghost.className);
-    //                 squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
-
-    //                 //check if the new space is closer
-    //                 const [pacmanX, pacmanY] = getCoordinates(pacmanCurrentIndex);
-    //                 const [ghostX, ghostY] = getCoordinates(ghost.currentIndex);
-                    
-    //                 const possibleMoves = [
-    //                     [ghostX - 1, ghostY],
-    //                     [ghostX + 1, ghostY],
-    //                     [ghostX, ghostY - 1],
-    //                     [ghostX, ghostY + 1],
-    //                 ];
-            
-    //                 /* sort by distance from Pac-man */
-    //                 possibleMoves.sort(function (a, b) {
-    //                     var aD = dist(a.x, a.y, pacman.x, pacman.y);
-    //                     var bD = dist(b.x, b.y, pacman.x, pacman.y);
-    //                     return aD - bD;
-    //                 });
-    
-    //                 direction = directions[Math.floor(Math.random() * directions.length)];
-    //             }//might need an else to rotate away from corners or dead ends ******
-
-    //         }
-
-    //         //if the ghost is currently scared
-    //         if(ghost.isScared){
-    //             squares[ghost.currentIndex].classList.add('scared-ghost');
-    //         }
-
-    //         //if the ghosts are scared and pacman runs int0 it
-    //         if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')){
-    //             squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost');
-    //             ghost.currentIndex = ghost.startIndex;
-    //             score += 100;
-    //             squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-    //         }
-    //         checkForGameOver();
-    //     }, ghost.speed);
-    // }
-
-    //******************************************* */
-    // //Ghost Move Function
-    // function moveGhost(ghost){
-    //     switch(ghost.className){
-    //         case 'binky':
-    //             chaseAggressive(ghost[0]);
-    //             break;
-
-    //         // case 'pinky':
-
-    //         //     break;
-
-    //         // case 'inky':
-
-    //         //     break;
-
-    //         // case 'clyde':
- 
-    //         //     break;
-
-    //     }
-    // }
-
-    //******************************************* */
 
     //Need to distinguish from acceptable path from the walls and ghost lair
     class Graph {
@@ -382,192 +247,326 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //map will have all the nodes and edges
     for(let i=0; i<layout.length; i++){
+        //Add these to the map
         if(layout[i] === 0){
             map.addNode(i);
-            nodeWeightFinderAllDirections(i);
+            nodeWeightFinderAllDirections(map, i);
+        }else if(layout[i] === 2){
+            map.addNode(i);
+            nodeWeightFinderAllDirections(map, i);
         }else if(layout[i] === 3){
             map.addNode(i);
-            nodeWeightFinderAllDirections(i);
+            nodeWeightFinderAllDirections(map, i);
         }else if(layout[i] === 4){
             map.addNode(i);
-            nodeWeightFinderAllDirections(i);
+            nodeWeightFinderAllDirections(map, i);
         }  
     }
-    console.log(map.adjacencyList);
-    
+
+    //All Ghosts can move
+    //ghosts.forEach(ghost => moveGhost(ghost));
+    moveGhost(map, ghosts[0]);
+    moveGhost(map, ghosts[1]);
+
+    //Ghost Move Function
+    function moveGhost(graph, ghost){
+        chaseAggressive(graph, ghost);
+        chaseAmbush(graph, ghost);
+        // setTimeout(scatterTopLeftCorner(graph, ghost), 10000);
+
+
+        // switch(ghost.className){
+        //     case 'blinky':
+        //         chaseAggressive(map, ghost);
+        //         break;
+
+            // case 'pinky':
+
+            //     break;
+
+            // case 'inky':
+
+            //     break;
+
+            // case 'clyde':
+ 
+            //     break;
+
+        // }
+    }
 
     //const directions = [-1, +1, +width, -width];
     //All edges are weight=1
-    function nodeWeightFinderAllDirections(nodeSource){
-                    //Going Right
-                    const tileRight = nodeSource + directions[1];
-                    if(tileRight < minIndex || tileRight > maxIndex || tileRight === 321 
-                        || tileRight === 322 || tileRight === 374 || tileRight === 381
-                        || tileRight === 392 || tileRight === 402 || tileRight === 409 
-                        || tileRight === 461 || tileRight === 462 || tileRight === 364
-                        || tileRight === 391){
-                        return;
-                    }
-                    if(layout[tileRight] === 0 || layout[tileRight] === 3 || layout[tileRight] === 4){
-                        map.addEdge(nodeSource, tileRight, 1);
-                    }
+    /* NOTE: Only Need FinderUp and FinderLeft; others are redundant and broken anyways*/
+    function nodeWeightFinderAllDirections(graph, nodeSource){
 
-        // nodeWeightFinderUp(nodeSource);
-        // nodeWeightFinderRight(nodeSource);
-        // nodeWeightFinderDown(nodeSource);
-        // nodeWeightFinderLeft(nodeSource);
+        nodeWeightFinderUp(graph, nodeSource);
+        nodeWeightFinderLeft(graph, nodeSource);
 
-        // function nodeWeightFinderUp(nodeSource){
-        //     //Going Up
-        //     const tileUp = nodeSource + directions[3];
-        //     if(tileUp < minIndex || tileUp > maxIndex){
-        //         return;
-        //     }
-        //     if(layout[tileUp] === 0 || layout[tileUp] === 3 || layout[tileUp] === 4){
-        //         map.addEdge(nodeSource, tileUp, 1);
-        //     }
-        // }
+        function nodeWeightFinderUp(graph, nodeSource){
+            //Going Up
+            const tileUp = nodeSource + directions[3];
+            if(tileUp < minIndex || tileUp > maxIndex){
+                return;
+            }
+            if(layout[tileUp] === 0 || layout[tileUp] === 2 || layout[tileUp] === 3 || layout[tileUp] === 4){
+                graph.addEdge(nodeSource, tileUp, 1);
+            }
+        }
 
-        // function nodeWeightFinderRight(nodeSource){
-        //     //Going Right
-        //     const tileRight = nodeSource + directions[1];
-        //     if(tileRight < minIndex || tileRight > maxIndex){
-        //         return;
-        //     }
-        //     if(layout[tileRight] === 0 || layout[tileRight] === 3 || layout[tileRight] === 4){
-        //         map.addEdge(nodeSource, tileRight, 1);
-        //     }
-        // }
-
-        // function nodeWeightFinderDown(nodeSource){
-        //     //Going Down
-        //     const tileDown = nodeSource + directions[2];
-        //     if(tileDown < minIndex || tileDown > maxIndex){
-        //         return;
-        //     }
-        //     if(layout[tileDown] === 0 || layout[tileDown] === 3 || layout[tileDown] === 4){
-        //         map.addEdge(nodeSource, tileDown, 1);
-        //     }
-        // }
-
-        // function nodeWeightFinderLeft(nodeSource){
-        //     //Going Left
-        //     const tileLeft = nodeSource + directions[0];
-        //     if(tileLeft < minIndex || tileLeft > maxIndex){
-        //         return;
-        //     }
-        //     if(layout[tileLeft] === 0 || layout[tileLeft] === 3 || layout[tileLeft] === 4){
-        //         map.addEdge(nodeSource, tileLeft, 1);
-        //     }
-        // }
+        function nodeWeightFinderLeft(graph, nodeSource){
+            //Going Left
+            const tileLeft = nodeSource + directions[0];
+            if(tileLeft < minIndex || tileLeft > maxIndex){
+                return;
+            }
+            if(layout[tileLeft] === 0 || layout[tileLeft] === 2 || layout[tileLeft] === 3 || layout[tileLeft] === 4){
+                graph.addEdge(nodeSource, tileLeft, 1);
+            }
+        }
     }
 
+    /* Let's Try Dijkstra for Blinky */
+    //priority queue
+    class PriorityQueue {
+        constructor() {
+          this.collection = [];
+        }
 
-    // /* Let's Try Dijkstra for Blinky */
-    // //priority queue
-    // class PriorityQueue {
-    //     constructor() {
-    //       this.collection = [];
-    //     }
+        //function to add elements to queue
+        //element is an array with element[0]=indexOnLayout and element[1]=weight
+        enqueue(element){
+            if (this.isEmpty()){ 
+            this.collection.push(element);
+            } else {
+            let added = false;
+            for (let i = 1; i <= this.collection.length; i++){
+                if (element[1] < this.collection[i-1][1]){ 
+                this.collection.splice(i-1, 0, element);
+                added = true;
+                break;
+                }
+            }
+            if (!added){
+                this.collection.push(element);
+            }
+            }
+        };
+        //remove elements
+        dequeue() {
+            let value = this.collection.shift();
+            return value;
+        };
+        //check if queue is empty
+        isEmpty() {
+            return (this.collection.length === 0) 
+        };
+    }
 
-    //     //function to add elements to queue
-    //     //element is an array with element[0]=indexOnLayout and element[1]=weight
-    //     enqueue(element){
-    //         if (this.isEmpty()){ 
-    //         this.collection.push(element);
-    //         } else {
-    //         let added = false;
-    //         for (let i = 1; i <= this.collection.length; i++){
-    //             if (element[1] < this.collection[i-1][1]){ 
-    //             this.collection.splice(i-1, 0, element);
-    //             added = true;
-    //             break;
-    //             }
-    //         }
-    //         if (!added){
-    //             this.collection.push(element);
-    //         }
-    //         }
-    //     };
-    //     //remove elements
-    //     dequeue() {
-    //         let value = this.collection.shift();
-    //         return value;
-    //     };
-    //     //check if queue is empty
-    //     isEmpty() {
-    //         return (this.collection.length === 0) 
-    //     };
-    // }
+    //Dijkstra's Algorithm to find shortest path
+    function findPathWithDijkstra(graph, startNode, endNode) {
+        //initialize queue
+        let times = {}; //time stores the weights along the path
+        let backtrace = {};
+        let pq = new PriorityQueue();
 
-    // //Dijkstra's Algorithm to find shortest path
-    // function findPathWithDijkstra(startNode, endNode) {
-    //     //initialize queue
-    //     let times = {}; //time stores the weights along the path
-    //     let backtrace = {};
-    //     let pq = new PriorityQueue();
+        //Obviously, starting at startNode is time = 0
+        times[startNode] = 0;
 
-    //     //Obviously, starting at startNode is time = 0
-    //     times[startNode] = 0;
-    //     //the other nodes can be anything so initialize to inf
-    //     this.nodes.forEach(node => {
-    //       if (node !== startNode) {
-    //         times[node] = Infinity;
-    //       }
-    //     });
-    //     //add starting node to priority queue
-    //     pq.enqueue([startNode, 0]);
+        //the other nodes can be anything so initialize to inf
+        graph.nodes.forEach(node => {
+          if (node !== startNode) {
+            times[node] = Infinity;
+          }
+        });
+        
+        //add starting node to priority queue
+        pq.enqueue([startNode, 0]);
 
-    //     //access first element in the queue and start checking the neighbors
-    //     while (!pq.isEmpty()) {
-    //         let shortestStep = pq.dequeue();
-    //         let currentNode = shortestStep[0];
-    //         this.adjacencyList[currentNode].forEach(neighbor => {
-    //             //We add the neighbor’s weight to the time it took to get to the node we’re on.
-    //             let time = times[currentNode] + neighbor.weight;
-    //             //Then we check if the calculated time is less than the time we currently have on file for this neighbor.
-    //             if (time < times[neighbor.node]) {
-    //                 //update the time
-    //                 times[neighbor.node] = time;
-    //                 //add this step to backtrace
-    //                 backtrace[neighbor.node] = currentNode;
-    //                 //add the neighbor to priority queue
-    //                 pq.enqueue([neighbor.node, time]);
-    //             }
-    //         });
-    //     }
+        //access first element in the queue and start checking the neighbors
+        while (!pq.isEmpty()) {
+            let shortestStep = pq.dequeue();
+            let currentNode = shortestStep[0];
+            graph.adjacencyList[currentNode].forEach(neighbor => {
+                //We add the neighbor’s weight to the time it took to get to the node we’re on.
+                let time = times[currentNode] + neighbor.weight;
+                //Then we check if the calculated time is less than the time we currently have on file for this neighbor.
+                if (time < times[neighbor.node]) {
+                    //update the time
+                    times[neighbor.node] = time;
+                    //add this step to backtrace
+                    backtrace[neighbor.node] = currentNode;
+                    //add the neighbor to priority queue
+                    pq.enqueue([neighbor.node, time]);
+                }
+            });
+        }
 
-    //     let path = [endNode];
-    //     let lastStep = endNode;
-    //     while(lastStep !== startNode) {
-    //       path.unshift(backtrace[lastStep]);
-    //       lastStep = backtrace[lastStep];
-    //     }
-    //     return `Path is ${path} and time is ${times[endNode]}`;
-    // }
+        let path = [endNode];
+        let lastStep = endNode;
+        while(lastStep !== startNode) {
+          path.unshift(backtrace[lastStep]);
+          lastStep = backtrace[lastStep];
+        }
+        // return `Path is ${path} and time is ${times[endNode]}`;
+        return path;
+    }
 
-    // findPathWithDijkstra(ghosts[0].startIndex, pacmanCurrentIndex);
-
-
+    //findPathWithDijkstra(map, ghosts[0].startIndex, pacmanCurrentIndex);
+    //console.log(findPathWithDijkstra(map, ghosts[0].startIndex, 364));
 
 //******************************************* */
-    // /* Blinky Movements */
-    // //chaseAggressive Mode: Stalks Pacman in shortest path
-    // function chaseAggressive(ghost){
-    //     //const directions = [-1, +1, +width, -width];
-    //     let direction = directions[Math.floor(Math.random() * directions.length)];
+    /* Scatter Mode (used for any Ghosts)
+     * The Ghost will move in random directions for a certain period of time
+     * Will not target the player
+    */
 
-    //     ghost.timerId = setInterval(function(){
+   function scatterMode(ghost){
+        let direction = directions[Math.floor(Math.random() * directions.length)];
+        ghost.timerId = setInterval(function() {
+            //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
+            if (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
+              !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
+                //remove the ghosts classes
+                squares[ghost.currentIndex].classList.remove(ghost.className);
+                squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
+                //move into that space
+                ghost.currentIndex += direction;
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+            //else find a new random direction ot go in
+            } else direction = directions[Math.floor(Math.random() * directions.length)];
 
-    //     }, ghost.speed);
-    // }
+            scaredGhostMode(ghost);
+            checkForGameOver();
+        }, ghost.speed);
+   }
+
+    /* Blinky Movements */
+    //chaseAggressive Mode: Stalks Pacman in shortest path
+    function chaseAggressive(graph, ghost){
+        ghost.timerId = setInterval(function(){
+            squares[ghost.currentIndex].classList.remove(ghost.className);
+            squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
+
+            //path is confined in an array
+            let path = findPathWithDijkstra(graph, ghost.currentIndex, pacmanCurrentIndex);
+            i = 1;
+
+            //Skip pass other ghost teleport
+            if(squares[path[i]].classList.contains('ghost') ){
+                i++;
+            }
+
+            //check there are no other ghosts in your path
+            if(i < path.length && !squares[path[i]].classList.contains('ghost')){
+                //change index to one step forward of the path each time
+                ghost.currentIndex = path[i];
+                //redraw the ghost in the new safe space
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+
+                scaredGhostMode(ghost);
+                checkForGameOver();
+            }
+
+        }, ghost.speed);
+    }
 
     //scatterTopRightCorner 
     //******************************************* */
 
-
-
+    
     /* Pinky Movements */
+    //chaseAmbush Mode: Blocks Pacman in shortest path
+    function chaseAmbush(graph, ghost){
+        ghost.timerId = setInterval(function(){
+            squares[ghost.currentIndex].classList.remove(ghost.className);
+            squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
+
+            //const directions = [-1, +1, +width, -width];
+            let blockCheckPoint = 0;
+
+            const tileUp = pacmanCurrentIndex + directions[3];
+            const tileRight = pacmanCurrentIndex + directions[1];
+            const tileDown = pacmanCurrentIndex + directions[2];
+            const tileLeft = pacmanCurrentIndex + directions[0];
+
+            if(tileUp >= minIndex && tileUp <= maxIndex 
+                && layout[tileUp] !== 1 && ghost.currentIndex !== tileUp) {
+                blockCheckPoint = tileUp;
+            }else if(tileRight >= minIndex && tileRight <= maxIndex 
+                && layout[tileRight] !== 1 && ghost.currentIndex !== tileRight) {
+                blockCheckPoint = tileRight;
+            }else if(tileDown >= minIndex && tileDown <= maxIndex 
+                && layout[tileDown] !== 1 && ghost.currentIndex !== tileDown) {
+                blockCheckPoint = tileDown;
+            }else if(tileLeft >= minIndex && tileLeft <= maxIndex 
+                && layout[tileLeft] !== 1 && ghost.currentIndex !== tileLeft) {
+                blockCheckPoint = tileLeft;
+            }
+            
+            //console.log(blockCheckPoint);
+
+            //path is confined in an array
+            let path = findPathWithDijkstra(graph, ghost.currentIndex, blockCheckPoint);
+            let i = 1;
+
+            //Skip pass other ghost teleport
+            if(squares[path[i]].classList.contains('ghost') ){
+                i++;
+            }
+
+            //Ghosts Pauses depending on the direction it is facing. 
+            if(path[i] === blockCheckPoint){
+                i--;
+            }
+
+            //check there are no other ghosts in your path
+            if(i < path.length && !squares[path[i]].classList.contains('ghost')){
+                //change index to one step forward of the path each time
+                ghost.currentIndex = path[i];
+                //redraw the ghost in the new safe space
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+
+                scaredGhostMode(ghost);
+                checkForGameOver();
+            }
+
+        }, ghost.speed);
+
+    }
+
+    //setTimeout(unScareGhosts, 10000);
+
+    //scatterTopLeftCorner
+    function scatterTopLeftCorner(graph, ghost){
+        ghost.timerId = setInterval(function(){
+            squares[ghost.currentIndex].classList.remove(ghost.className);
+            squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
+
+            //scatterTopLeftCorner
+            path = findPathWithDijkstra(graph, ghost.currentIndex, topLeftCornerLocation);
+            let i = 1;
+
+            if(i < path.length){
+                //remove all ghost related classes
+                ghost.currentIndex = path[i];
+                //redraw the ghost in the new safe space
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+
+                // i++; //Look at the logic! Not needed! setInterval is like a loop. then look at the lets
+                scaredGhostMode(ghost);
+                checkForGameOver();
+            }
+
+            if(ghost.currentIndex === topLeftCornerLocation){
+                setTimeout(scatterMode(ghost), 10000);
+            }
+        }, ghost.speed);
+    }
+
+
+
+
 
     /* Inky Movements */
 
@@ -578,78 +577,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //////////////////
 
+    //Program for when Ghosts are scared
+    function scaredGhostMode(ghost){
+        //if the ghost is currently scared
+        if(ghost.isScared){
+            squares[ghost.currentIndex].classList.add('scared-ghost');
+        }
 
-
-    // ghosts.forEach(ghost => moveGhost(ghost));
-
-    // //write the function to move the ghosts
-    // function moveGhost(ghost){
-    //     const directions = [-1, +1, +width, -width];
-    //     let direction = directions[Math.floor(Math.random() * directions.length)];
-
-    //     ghost.timerId = setInterval(function(){
-    //         // console.log(ghost.currentIndex); ************
-    //         //if the next square your ghost is going to do in does NOT contain a wall and a ghost, you can go there.
-    //         if(!squares[ghost.currentIndex + direction].classList.contains('wall')
-    //             && !squares[ghost.currentIndex + direction].classList.contains('ghost') ){
-
-    //             //remove all ghost related classes
-    //             squares[ghost.currentIndex].classList.remove(ghost.className);
-    //             squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
-                
-    //             //check if the new space is closer
-    //             const [ghostX, ghostY] = getCoordinates(ghost.currentIndex);
-    //             const [pacmanX, pacmanY] = getCoordinates(pacmanCurrentIndex);
-    //             const [ghostNewX, ghostNewY] = getCoordinates(ghost.currentIndex + direction);
-
-    //             function isXCoordCloser(){
-    //                 if((ghostNewX - pacmanX) > (ghostX - pacmanX)){
-    //                     return true;
-    //                 }else{
-    //                     return false;
-    //                 }
-    //             }
-
-    //             function isYCoordCloser(){
-    //                 if((ghostNewY - pacmanY) > (ghostY - pacmanY)){
-    //                     return true;
-    //                 }else{
-    //                     return false;
-    //                 }
-    //             }
-
-    //             if( isXCoordCloser() || isYCoordCloser() ){
-    //                 //change the current index to the new safe square
-    //                 ghost.currentIndex += direction;
-    //                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-    //             }else{
-    //                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-    //                 direction = directions[Math.floor(Math.random() * directions.length)];
-    //             }
-    //             //************************************************** */
-    //             //redraw the ghost in the new safe space
-    //             // squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-
-    //             //else find a new direction to try
-    //             }else{
-    //                 direction = directions[Math.floor(Math.random() * directions.length)];
-    //             }
-
-    //             //if the ghost is currently scared
-    //             if(ghost.isScared){
-    //                 squares[ghost.currentIndex].classList.add('scared-ghost');
-    //             }
-
-    //             //if the ghosts are scared and pacman runs int it
-    //             if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')){
-    //                 squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost');
-    //                 ghost.currentIndex = ghost.startIndex;
-    //                 score += 100;
-    //                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-    //             }
-    //             checkForGameOver();
-    //     }, ghost.speed);
-    // }
+        //if the ghosts are scared and pacman runs int it
+        if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')){
+            squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost');
+            ghost.currentIndex = ghost.startIndex;
+            score += 100;
+            squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+        }
+    }
 
     //check for game over
     function checkForGameOver(){
@@ -663,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //check for a win
     function checkForWin(){
-        if(score === 292){
+        if(score >= 1000){
             ghosts.forEach(ghost => clearInterval(ghost.timerId));
             document.removeEventListener('keyup', movePacman);
             scoreDisplay.innerHTML = 'YOU WON';

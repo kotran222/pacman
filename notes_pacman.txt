@@ -13,21 +13,31 @@ August 15th 2020 | K.T.
 
     Investigate power pellet 
         Can kill one ghost, second ghost that is afraid is not eaten when Pac-man reaches it?...
+        Bit Slow to kill second ghost
 
     ***ALGORITHM
     Need to improve ghost algorithm 
         (1) Scatter: run away from pac-man for short period of time to a specific corner in the map
         (2) Chase: chase pac-man for a good deal of time
+            //Blinky is perfect by itself. With others, he tends to teleport two tiles forward at a time...
+            //ghosts tend to move diagonally...
+            //pinky by itself tries to block you when it is facing a certain direction or eat you immediately other times. 
         (3) Region Awareness: one ghost at each corner 
         (4) Can Ghost go through the tunnel?
         (5) Ghost stuck on corners. 
 
         Blinky: Dijkstra's???
         https://www.youtube.com/watch?v=ZXzkppr6TVs
+            //SUCCESS!!!
+            //index on the board are nodes 
+            //each index is adjacent to one another so weight=1
+            //apply the dijkstra's algorithm to the map
+
 
 August 16th 2020 | K.T.
         Need to fix function nodeWeightFinderAllDirections(nodeSource) 
-        The Up portion works fine. 
-        Horizontal is having issues...
+            //fixed: just needed to do left and up correctly
+            //right and bottom is redundant 
+
 
     
