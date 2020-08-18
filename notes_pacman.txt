@@ -19,8 +19,7 @@ August 15th 2020 | K.T.
     Need to improve ghost algorithm 
         (1) Scatter: run away from pac-man for short period of time to a specific corner in the map
         (2) Chase: chase pac-man for a good deal of time
-            //Blinky is perfect by itself. With others, he tends to teleport two tiles forward at a time...
-            //ghosts tend to move diagonally...
+            //Blinky can chase you
             //pinky by itself tries to block you when it is facing a certain direction or eat you immediately other times. 
         (3) Region Awareness: one ghost at each corner 
         (4) Can Ghost go through the tunnel?

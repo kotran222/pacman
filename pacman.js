@@ -189,8 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //all the ghosts
     ghosts = [
-        new Ghost('blinky', 351, 500, 'chaseAggressive', 'scatterTopRightCorner'),
-        new Ghost('pinky', 348, 600, 'chaseAmbush', 'scatterTopLeftCorner'),
+        new Ghost('blinky', 351, 200, 'chaseAggressive', 'scatterTopRightCorner'),
+        new Ghost('pinky', 348, 400, 'chaseAmbush', 'scatterTopLeftCorner'),
         new Ghost('inky', 435, 300, 'chasePatrol', 'scatterBottomRightCorner'),
         new Ghost('clyde', 432, 500, 'chaseRandom', 'scatterBottomLeftCorner')  
     ];
@@ -270,19 +270,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Ghost Move Function
     function moveGhost(graph, ghost){
-        chaseAggressive(graph, ghost);
-        chaseAmbush(graph, ghost);
+        // chaseAggressive(graph, ghost);
+        // chaseAmbush(graph, ghost);
         // setTimeout(scatterTopLeftCorner(graph, ghost), 10000);
 
 
-        // switch(ghost.className){
-        //     case 'blinky':
-        //         chaseAggressive(map, ghost);
-        //         break;
+        switch(ghost.className){
+            case 'blinky':
+                chaseAggressive(map, ghost);
+                break;
 
-            // case 'pinky':
-
-            //     break;
+            case 'pinky':
+                chaseAmbush(graph, ghost);
+                break;
 
             // case 'inky':
 
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
             //     break;
 
-        // }
+        }
     }
 
     //const directions = [-1, +1, +width, -width];
