@@ -1,4 +1,5 @@
 Pacman Notes
+//Legend: If I put a comment under the issue, that means I addressed it 
 
 August 15th 2020 | K.T.
     Map is nice and unique, scoreboard works
@@ -57,6 +58,16 @@ August 20th 2020 | K.T.
         Needed improvements:  moveGhost setInterval is bad when player can quickly collect points so relying on time is a challenge --> ghosts stop moving and can't transition to next round until setInterval goes to next loop
                                 decreasing the moveGhost setInterval to a lower time causes ghosts to glitch when player didn't collect enough points to stop the overlaps
 
+    Final Notes: The game is ready to be played in only chaseMode activated. 
+        Rotation of modes
+        design of Pacman and Ghosts need further improvements
+        game functionality like pacman auto movement could be examined. 
+        blinking feature to alert players ghosts are going to be out of scared mode would be nice. 
+        pacman audio incorporating is a plus. 
+        update cherry animations
+        pacman movement incorporate hold button so no rapid button taps to move. 
+
+        *During gameplay, game freezes for some reason occassionally. Need to investigate bugs in code. 
 
 
     

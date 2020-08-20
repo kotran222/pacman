@@ -310,39 +310,39 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveGhost(graph, ghost){
 
 
-        let timerId = setInterval(function(){
-        current_level = incrementLevel(current_level, score);
-        console.log(current_level);
-        switch(current_level){
-            case 1: // score < 20 is round 1
-                console.log('random');
-                activateGhostRandomMode(ghost, 20); //score >= 20, then random mode stops
-                break;
-            case 2: // score < 40 is round 2
-                console.log('scatter');
-                activateGhostScatterMode(graph, ghost, 40); //score >= 40, then scatter mode stops
-                break;
-            case 3: // score < 80 is round 3
-                console.log('chase');
-                activateGhostChaseMode(graph, ghost, 80); //score >= 80, then chase mode stops
-                break;
-            case 4: //score < 120 is round 4
-                console.log('scatter');
-                activateGhostScatterMode(graph, ghost, 120); //score >= 120, then scatter mode stops
-                break;
-            // case current_level == 5:
-            //     console.log('chase');
-            //     activateGhostChaseMode(graph, ghost, 1000);
-            //     break;
-            default: 
-                // console.log(current_level);
-                console.log('chase default');
-                clearInterval(timerId);
-                activateGhostChaseMode(graph, ghost, 1000); //score >= 1000, then chase mode stops
-                break;
-        }
+    //     let timerId = setInterval(function(){
+    //     current_level = incrementLevel(current_level, score);
+    //     console.log(current_level);
+    //     switch(current_level){
+    //         case 1: // score < 20 is round 1
+    //             console.log('random');
+    //             activateGhostRandomMode(ghost, 20); //score >= 20, then random mode stops
+    //             break;
+    //         case 2: // score < 40 is round 2
+    //             console.log('scatter');
+    //             activateGhostScatterMode(graph, ghost, 40); //score >= 40, then scatter mode stops
+    //             break;
+    //         case 3: // score < 80 is round 3
+    //             console.log('chase');
+    //             activateGhostChaseMode(graph, ghost, 80); //score >= 80, then chase mode stops
+    //             break;
+    //         case 4: //score < 120 is round 4
+    //             console.log('scatter');
+    //             activateGhostScatterMode(graph, ghost, 120); //score >= 120, then scatter mode stops
+    //             break;
+    //         // case current_level == 5:
+    //         //     console.log('chase');
+    //         //     activateGhostChaseMode(graph, ghost, 1200);
+    //         //     break;
+    //         default: 
+    //             // console.log(current_level);
+    //             console.log('chase default');
+    //             clearInterval(timerId);
+    //             activateGhostChaseMode(graph, ghost, 1200); //score >= 1200, then chase mode stops
+    //             break;
+    //     }
         
-    }, 3000);
+    // }, 3000);
     
 
 
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // activateGhostScatterMode(graph, ghost, 40);
 
-        // activateGhostChaseMode(graph, ghost, 80);
+        activateGhostChaseMode(graph, ghost, 8000);
     }
 
     function scoreToLevel(playerScore){
@@ -405,7 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
 
             case 'clyde':
-                chaseRandom(ghost, scoreParameter);
+                // chaseRandom(ghost, scoreParameter);
+                travelToCorner(graph, ghost, bottomLeftCornerLocation, bottomLeftCornerPath, scoreParameter);
                 break;
 
         }
