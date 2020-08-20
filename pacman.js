@@ -9,9 +9,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const directions = [-1, 1, width, (-1*width)];
     const minIndex = 0; 
     const maxIndex = 783;
+    let current_level = 1;
 
     //Corner of the maps
     const topLeftCornerLocation = 29; //Pinky
+    const topRightCornerLocation = 54; //Blinky
+    const bottomRightCornerLocation = 754; //Inky
+    const bottomLeftCornerLocation = 729; //Clyde
+
+    //Corner of Maps' paths during scatter mode
+    const topLeftCornerPath = [29, 57, 85, 113, 141, 
+                                142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 
+                                152, 124, 96, 68, 40, 
+                                39, 38, 37, 36, 35, 34, 33, 32, 31, 30]; //Pinky: counterclockwise
+    const topRightCornerPath = [54, 82, 110, 138, 166, 
+                                165, 164, 163, 162, 161, 160, 159, 158, 157, 156,
+                                155, 127, 99, 71, 43,
+                                44, 45, 46, 47, 48, 49, 50, 51, 52, 53]; //Blinky: clockwise
+    const bottomRightCornerPath = [754, 726, 698, 670, 
+                                    669, 668, 667, 666, 
+                                    665, 637, 609, 581, 
+                                    580, 579, 
+                                    578, 606, 634, 662, 
+                                    661, 660, 
+                                    659, 687, 715, 743, 
+                                    744, 745, 746, 747, 748, 749, 750, 751, 752, 753]; //Inky: counter-clockwise
+    const bottomLeftCornerPath = [729, 701, 673, 645, 
+                                    646, 647, 648, 649, 
+                                    650, 622, 594, 566, 
+                                    567, 568, 
+                                    569, 597, 625, 653, 
+                                    654, 655, 
+                                    656, 684, 712, 740, 
+                                    739, 738, 737, 736, 735, 734, 733, 732, 731, 730]; //Clyde
 
     //Legend
     // 0 - pac-dot
@@ -23,11 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-        1,3,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,3,1,
+        1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
         1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
-        1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
+        1,0,1,1,1,1,0,1,1,1,1,1,3,1,1,3,1,1,1,1,1,0,1,1,1,1,0,1,
         1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
         1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
         1,0,1,1,1,1,0,1,1,4,4,4,4,4,4,4,4,4,4,1,1,0,1,1,1,1,0,1,
@@ -40,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         1,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,1,
         1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
         1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-        1,3,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,3,1,
+        1,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,3,0,0,0,1,
         1,1,1,0,1,1,0,1,1,0,1,0,1,1,1,1,0,1,0,1,1,0,1,1,0,1,1,1,
         1,1,1,0,1,1,0,1,1,0,1,0,1,1,1,1,0,1,0,1,1,0,1,1,0,1,1,1,
         1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1,
@@ -173,14 +203,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //create our Ghost template
     class Ghost{
-        constructor(className, startIndex, speed, chaseBehavior, scatterBehavior){
+        constructor(className, startIndex, speed){
             this.className = className;
             this.startIndex = startIndex;
             this.speed = speed;
             this.currentIndex = startIndex;
             // this.moving = false;
-            this.chaseBehavior = chaseBehavior; //chaseBehavior = chaseAggressive, chaseAmbush, chasePatrol, or chaseRandom
-            this.scatterBehavior = scatterBehavior;   //scatterBehavior = scatterTopLeftCorner, scatterTopRightCorner, scatterBottomLeftCorner, or scatterBottomRightCorner
+            this.chaseBehavior = false; //chaseBehavior = chaseAggressive, chaseAmbush, chasePatrol, or chaseRandom
+            // this.travelBehavior = false; //travelBehavior = travelTopLeftCorner, travelTopRightCorner, travelBottomLeftCorner, or travelBottomRightCorner
+            // this.scatterBehavior = scatterBehavior;   //scatterBehavior = scatterTopLeftCorner, scatterTopRightCorner, scatterBottomLeftCorner, or scatterBottomRightCorner
             //this.frightenedBehavior = frightenedBehavior; //frightenedBehavior = frightenedWandering;
             this.isScared = false;
             this.timerId = NaN;
@@ -189,10 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //all the ghosts
     ghosts = [
-        new Ghost('blinky', 351, 200, 'chaseAggressive', 'scatterTopRightCorner'),
-        new Ghost('pinky', 348, 400, 'chaseAmbush', 'scatterTopLeftCorner'),
-        new Ghost('inky', 435, 300, 'chasePatrol', 'scatterBottomRightCorner'),
-        new Ghost('clyde', 432, 500, 'chaseRandom', 'scatterBottomLeftCorner')  
+        new Ghost('pinky', 348, 250),
+        new Ghost('blinky', 351, 200),
+        new Ghost('inky', 435, 300),
+        new Ghost('clyde', 432, 400)  
     ];
 
     //draw my ghost onto the grid
@@ -207,14 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function getCoordinates(index){
         return[index % width, Math.floor(index / width)];
     }
-        /*EXAMPLE: PACMAN START
+        /*EXAMPLE: An indexed Location on the layout
         * index = 490
         * x-coor: 490 % 28 = 14 since 28*17=476. --> 490-476=14. Therefore, x = 14 
         * y-coor: 490 / 28 = 17.5 --> floor = 17. Therfore, y = 17.
         * 
         */
 
-
+    //******************************************* */
 
     //Need to distinguish from acceptable path from the walls and ghost lair
     class Graph {
@@ -263,38 +294,147 @@ document.addEventListener('DOMContentLoaded', () => {
         }  
     }
 
+    //******************************************* */
+
     //All Ghosts can move
-    //ghosts.forEach(ghost => moveGhost(ghost));
-    moveGhost(map, ghosts[0]);
-    moveGhost(map, ghosts[1]);
+    ghosts.forEach(ghost => moveGhost(map, ghost));
+    // ghosts.forEach(ghost => moveGhost(ghost));
+    // moveGhost(map, ghosts[0]);
+    // moveGhost(map, ghosts[1]);
+    // moveGhost(map, ghosts[2]);
+    // moveGhost(map, ghosts[3]);
+
+
 
     //Ghost Move Function
     function moveGhost(graph, ghost){
-        // chaseAggressive(graph, ghost);
-        // chaseAmbush(graph, ghost);
-        // setTimeout(scatterTopLeftCorner(graph, ghost), 10000);
 
 
+        let timerId = setInterval(function(){
+        current_level = incrementLevel(current_level, score);
+        console.log(current_level);
+        switch(current_level){
+            case 1: // score < 20 is round 1
+                console.log('random');
+                activateGhostRandomMode(ghost, 20); //score >= 20, then random mode stops
+                break;
+            case 2: // score < 40 is round 2
+                console.log('scatter');
+                activateGhostScatterMode(graph, ghost, 40); //score >= 40, then scatter mode stops
+                break;
+            case 3: // score < 80 is round 3
+                console.log('chase');
+                activateGhostChaseMode(graph, ghost, 80); //score >= 80, then chase mode stops
+                break;
+            case 4: //score < 120 is round 4
+                console.log('scatter');
+                activateGhostScatterMode(graph, ghost, 120); //score >= 120, then scatter mode stops
+                break;
+            // case current_level == 5:
+            //     console.log('chase');
+            //     activateGhostChaseMode(graph, ghost, 1000);
+            //     break;
+            default: 
+                // console.log(current_level);
+                console.log('chase default');
+                clearInterval(timerId);
+                activateGhostChaseMode(graph, ghost, 1000); //score >= 1000, then chase mode stops
+                break;
+        }
+        
+    }, 3000);
+    
+
+
+
+        // activateGhostRandomMode(ghost, 20);
+
+        // activateGhostScatterMode(graph, ghost, 40);
+
+        // activateGhostChaseMode(graph, ghost, 80);
+    }
+
+    function scoreToLevel(playerScore){
+        if(playerScore < 20){
+            return 1;
+        }else if (playerScore < 40){
+            return 2;
+        }else if(playerScore < 80){
+            return 3;
+        }else if(playerScore < 120){
+            return 4;
+        }else{
+            return 5;
+        }
+    }
+
+    function incrementLevel(current_level, playerScore){
+        let next_level = scoreToLevel(playerScore);
+        if(next_level !== current_level){
+            current_level = next_level;
+            current_level = parseInt(current_level);
+            return current_level;
+        }else{
+            current_level = parseInt(current_level);
+            return current_level;
+        }
+    }
+
+    //Each ghost will move randomly
+    function activateGhostRandomMode(ghost, scoreParameter){
+        /* Random Scatter Mode (used for any Ghosts)
+        * The Ghost will move in random directions for a certain period of time
+        * Will not target the player in any special way
+        */
+        chaseRandom(ghost, scoreParameter); //borrowed by Clyde
+    }
+
+    // Each ghost has a unique chase mode 
+    function activateGhostChaseMode(graph, ghost, scoreParameter){
         switch(ghost.className){
-            case 'blinky':
-                chaseAggressive(map, ghost);
-                break;
-
             case 'pinky':
-                chaseAmbush(graph, ghost);
+                chaseAmbush(graph, ghost, scoreParameter);
                 break;
 
-            // case 'inky':
+            case 'blinky':
+                chaseAggressive(graph, ghost, scoreParameter);
+                break;
 
-            //     break;
+            case 'inky':
+                chasePatrol(graph, ghost, scoreParameter);
+                break;
 
-            // case 'clyde':
- 
-            //     break;
+            case 'clyde':
+                chaseRandom(ghost, scoreParameter);
+                break;
 
         }
     }
 
+    //each ghost has a unique scatter mode
+    function activateGhostScatterMode(graph, ghost, scoreParameter){
+        switch(ghost.className){
+            case 'pinky':
+                travelToCorner(graph, ghost, topLeftCornerLocation, topLeftCornerPath, scoreParameter);
+                break;
+
+            case 'blinky':
+                travelToCorner(graph, ghost, topRightCornerLocation, topRightCornerPath, scoreParameter);
+                break;
+
+            case 'inky':
+                travelToCorner(graph, ghost, bottomRightCornerLocation, bottomRightCornerPath, scoreParameter);
+                break;
+
+            case 'clyde':
+                travelToCorner(graph, ghost, bottomLeftCornerLocation, bottomLeftCornerPath, scoreParameter);
+                break;
+
+        }
+    }
+
+    //******************************************* */
+    /* Let's Try Dijkstra Algorithm */
     //const directions = [-1, +1, +width, -width];
     //All edges are weight=1
     /* NOTE: Only Need FinderUp and FinderLeft; others are redundant and broken anyways*/
@@ -326,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /* Let's Try Dijkstra for Blinky */
+    /* Let's Try Dijkstra Algorithm */
     //priority queue
     class PriorityQueue {
         constructor() {
@@ -408,76 +548,88 @@ document.addEventListener('DOMContentLoaded', () => {
           path.unshift(backtrace[lastStep]);
           lastStep = backtrace[lastStep];
         }
-        // return `Path is ${path} and time is ${times[endNode]}`;
         return path;
     }
 
-    //findPathWithDijkstra(map, ghosts[0].startIndex, pacmanCurrentIndex);
-    //console.log(findPathWithDijkstra(map, ghosts[0].startIndex, 364));
-
 //******************************************* */
-    /* Scatter Mode (used for any Ghosts)
-     * The Ghost will move in random directions for a certain period of time
-     * Will not target the player
-    */
+    /*All ghosts */
 
-   function scatterMode(ghost){
-        let direction = directions[Math.floor(Math.random() * directions.length)];
-        ghost.timerId = setInterval(function() {
-            //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
-            if (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
-              !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
-                //remove the ghosts classes
-                squares[ghost.currentIndex].classList.remove(ghost.className);
-                squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
-                //move into that space
-                ghost.currentIndex += direction;
-                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-            //else find a new random direction ot go in
-            } else direction = directions[Math.floor(Math.random() * directions.length)];
-
-            scaredGhostMode(ghost);
-            checkForGameOver();
-        }, ghost.speed);
-   }
-
-    /* Blinky Movements */
-    //chaseAggressive Mode: Stalks Pacman in shortest path
-    function chaseAggressive(graph, ghost){
+    //travel to designated corner
+    function travelToCorner(graph, ghost, cornerLocation, cornerPath, scoreParameter){
         ghost.timerId = setInterval(function(){
             squares[ghost.currentIndex].classList.remove(ghost.className);
             squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
 
-            //path is confined in an array
-            let path = findPathWithDijkstra(graph, ghost.currentIndex, pacmanCurrentIndex);
-            i = 1;
+            //travel to designated corner
+            let path = findPathWithDijkstra(graph, ghost.currentIndex, cornerLocation);
+            let i = 1;
 
             //Skip pass other ghost teleport
-            if(squares[path[i]].classList.contains('ghost') ){
+            if(i < path.length && squares[path[i]].classList.contains('ghost') ){
                 i++;
             }
 
             //check there are no other ghosts in your path
             if(i < path.length && !squares[path[i]].classList.contains('ghost')){
-                //change index to one step forward of the path each time
+                //remove all ghost related classes
+                ghost.currentIndex = path[i];
+                //redraw the ghost in the new safe space
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+            }
+
+            if(ghost.currentIndex === cornerLocation){
+                clearInterval(ghost.timerId);
+                // console.log('Finished travel');
+                scatterAtCorner(ghost, cornerPath, scoreParameter);
+            }
+
+            scaredGhostMode(ghost);
+            checkForGameOver();
+            stopMoving(ghost, scoreParameter);
+        }, ghost.speed);
+    }
+
+    //Scatter at the designated corner
+    function scatterAtCorner(ghost, cornerPath, scoreParameter){
+        //scatterTopLeftCorner
+        let path = cornerPath;
+        let i = 0;
+        ghost.timerId = setInterval(function(){
+            if(i >= path.length){
+                i = 0;
+            }
+
+            squares[ghost.currentIndex].classList.remove(ghost.className);
+            squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
+    
+            //Skip pass other ghost teleport
+            if(i < path.length && squares[path[i]].classList.contains('ghost') ){
+                i++;
+            }
+    
+            //check there are no other ghosts in your path
+            if(i < path.length && !squares[path[i]].classList.contains('ghost')){
+                //remove all ghost related classes
                 ghost.currentIndex = path[i];
                 //redraw the ghost in the new safe space
                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
 
-                scaredGhostMode(ghost);
-                checkForGameOver();
+                i++;
             }
 
+            // console.log(i);
+
+            scaredGhostMode(ghost);
+            checkForGameOver();
+            stopMoving(ghost, scoreParameter);
         }, ghost.speed);
     }
 
-    //scatterTopRightCorner 
     //******************************************* */
-
     
     /* Pinky Movements */
     //chaseAmbush Mode: Blocks Pacman in shortest path
-    function chaseAmbush(graph, ghost){
+    function chaseAmbush(graph, ghost, scoreParameter){
         ghost.timerId = setInterval(function(){
             squares[ghost.currentIndex].classList.remove(ghost.className);
             squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
@@ -485,10 +637,10 @@ document.addEventListener('DOMContentLoaded', () => {
             //const directions = [-1, +1, +width, -width];
             let blockCheckPoint = 0;
 
-            const tileUp = pacmanCurrentIndex + directions[3];
-            const tileRight = pacmanCurrentIndex + directions[1];
-            const tileDown = pacmanCurrentIndex + directions[2];
-            const tileLeft = pacmanCurrentIndex + directions[0];
+            const tileUp = pacmanCurrentIndex + 2*directions[3];
+            const tileRight = pacmanCurrentIndex + 2*directions[1];
+            const tileDown = pacmanCurrentIndex + 2*directions[2];
+            const tileLeft = pacmanCurrentIndex + 2*directions[0];
 
             if(tileUp >= minIndex && tileUp <= maxIndex 
                 && layout[tileUp] !== 1 && ghost.currentIndex !== tileUp) {
@@ -503,15 +655,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 && layout[tileLeft] !== 1 && ghost.currentIndex !== tileLeft) {
                 blockCheckPoint = tileLeft;
             }
-            
-            //console.log(blockCheckPoint);
 
             //path is confined in an array
             let path = findPathWithDijkstra(graph, ghost.currentIndex, blockCheckPoint);
             let i = 1;
 
             //Skip pass other ghost teleport
-            if(squares[path[i]].classList.contains('ghost') ){
+            if(i < path.length && squares[path[i]].classList.contains('ghost') ){
                 i++;
             }
 
@@ -526,56 +676,124 @@ document.addEventListener('DOMContentLoaded', () => {
                 ghost.currentIndex = path[i];
                 //redraw the ghost in the new safe space
                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-
-                scaredGhostMode(ghost);
-                checkForGameOver();
             }
 
+            scaredGhostMode(ghost);
+            checkForGameOver();
+            stopMoving(ghost, scoreParameter);
         }, ghost.speed);
 
     }
 
-    //setTimeout(unScareGhosts, 10000);
 
-    //scatterTopLeftCorner
-    function scatterTopLeftCorner(graph, ghost){
+    //******************************************* */
+
+    /* Blinky Movements */
+    //chaseAggressive Mode: Stalks Pacman in shortest path
+    function chaseAggressive(graph, ghost, scoreParameter){
         ghost.timerId = setInterval(function(){
             squares[ghost.currentIndex].classList.remove(ghost.className);
             squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
 
-            //scatterTopLeftCorner
-            path = findPathWithDijkstra(graph, ghost.currentIndex, topLeftCornerLocation);
+            //path is confined in an array
+            let path = findPathWithDijkstra(graph, ghost.currentIndex, pacmanCurrentIndex);
             let i = 1;
 
-            if(i < path.length){
-                //remove all ghost related classes
+            //Skip pass other ghost teleport
+            if(i < path.length && squares[path[i]].classList.contains('ghost') ){
+                i++;
+            }
+
+            //check there are no other ghosts in your path
+            if(i < path.length && !squares[path[i]].classList.contains('ghost')){
+                //change index to one step forward of the path each time
                 ghost.currentIndex = path[i];
                 //redraw the ghost in the new safe space
                 squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
-
-                // i++; //Look at the logic! Not needed! setInterval is like a loop. then look at the lets
-                scaredGhostMode(ghost);
-                checkForGameOver();
             }
 
-            if(ghost.currentIndex === topLeftCornerLocation){
-                setTimeout(scatterMode(ghost), 10000);
+            scaredGhostMode(ghost);
+            checkForGameOver();
+            stopMoving(ghost, scoreParameter);
+        }, ghost.speed);
+    }
+
+    //******************************************* */
+
+    /* Inky Movements */
+    //chasePatrol Mode: Random Patrol Locations Assign every second
+    function chasePatrol(graph, ghost, scoreParameter){
+        let randomPatrolLocation = Math.floor(Math.random() * (graph.nodes.length - 1));
+        if(ghost.currentIndex != graph.nodes[randomPatrolLocation]){
+        ghost.timerId = setInterval(function(){
+            squares[ghost.currentIndex].classList.remove(ghost.className);
+            squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
+
+            //path is confined in an array
+            let path = findPathWithDijkstra(graph, ghost.currentIndex, graph.nodes[randomPatrolLocation]);
+            i = 1;
+
+            //Skip pass other ghost teleport
+            if(i < path.length && squares[path[i]].classList.contains('ghost') ){
+                i++;
             }
+
+            //check there are no other ghosts in your path
+            if(i < path.length && !squares[path[i]].classList.contains('ghost')){
+                //change index to one step forward of the path each time
+                ghost.currentIndex = path[i];
+                //redraw the ghost in the new safe space
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+            }
+
+            if(ghost.currentIndex === graph.nodes[randomPatrolLocation]){
+                randomPatrolLocation = Math.floor(Math.random() * (graph.nodes.length - 1));
+            }
+
+            scaredGhostMode(ghost);
+            checkForGameOver();
+            stopMoving(ghost, scoreParameter);
+        }, ghost.speed);
+        }
+    }
+
+
+
+    //******************************************* */
+
+    /* Clyde Movements */
+    //chaseRandom Mode: complete random movements. 
+    function chaseRandom(ghost, scoreParameter){
+        let direction = directions[Math.floor(Math.random() * directions.length)];
+        ghost.timerId = setInterval(function() {
+            //if the next squre your ghost is going t go to does not have a ghost and does not have a wall
+            if (!squares[ghost.currentIndex + direction].classList.contains('ghost') 
+            && !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
+                //remove the ghosts classes
+                squares[ghost.currentIndex].classList.remove(ghost.className);
+                squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost');
+                //move into that space
+                ghost.currentIndex += direction;
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost');
+            //else find a new random direction ot go in
+            } else direction = directions[Math.floor(Math.random() * directions.length)];
+            
+            scaredGhostMode(ghost);
+            checkForGameOver();
+            stopMoving(ghost, scoreParameter);
         }, ghost.speed);
     }
 
 
 
+    //******************************************* */
 
-
-    /* Inky Movements */
-
-    /* Clyde Movements */
-
-
-
-
-    //////////////////
+    //when score parameter is reached, ghosts should stop moving
+    function stopMoving(ghost, scoreParameter){
+        if(score >= scoreParameter){
+            clearInterval(ghost.timerId);
+        }
+    }
 
     //Program for when Ghosts are scared
     function scaredGhostMode(ghost){

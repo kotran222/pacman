@@ -18,12 +18,19 @@ August 15th 2020 | K.T.
     ***ALGORITHM
     Need to improve ghost algorithm 
         (1) Scatter: run away from pac-man for short period of time to a specific corner in the map
+            //activateScatterMode alone works well    
         (2) Chase: chase pac-man for a good deal of time
+            //activateChaseMode alone works well
             //Blinky can chase you
             //pinky by itself tries to block you when it is facing a certain direction or eat you immediately other times. 
+            //inky patrols randomly selected walkable tiles on the map
+            //clyde wanders randomly
         (3) Region Awareness: one ghost at each corner 
+            //travel to their corner works. scatter afterwards work
         (4) Can Ghost go through the tunnel?
+            //No
         (5) Ghost stuck on corners. 
+            //fixed
 
         Blinky: Dijkstra's???
         https://www.youtube.com/watch?v=ZXzkppr6TVs
@@ -37,6 +44,19 @@ August 16th 2020 | K.T.
         Need to fix function nodeWeightFinderAllDirections(nodeSource) 
             //fixed: just needed to do left and up correctly
             //right and bottom is redundant 
+
+August 20th 2020 | K.T.
+    Updates
+    All ghosts chase and scatter modes are done. 
+    challenge: using setInterval to alternate between scatter and chase modes. 
+        problem: the ghosts movements themselves utilize setInterval 
+                put them under the umbrella function moveGhost which also uses setInterval causes crazy glitches
+        solution so far: when a certain score is reached within the individual ghost movement functions, clearInterval is called so ghost can freeze in their tracks and the setInterval overlap won't occur to cause further glitches. THIS IS REQUIRED if you want to alternate between the scatter, random, or chase modes of each ghost.
+                        the setInterval within the moveGhost is a larger interval so player has enough time to collect points to avoid glitches
+                        in the last round, chaseMode is locked and setInterval in moveGhost is deactivated.
+        Needed improvements:  moveGhost setInterval is bad when player can quickly collect points so relying on time is a challenge --> ghosts stop moving and can't transition to next round until setInterval goes to next loop
+                                decreasing the moveGhost setInterval to a lower time causes ghosts to glitch when player didn't collect enough points to stop the overlaps
+
 
 
     
