@@ -4,7 +4,7 @@
 html{
     font-family: 'Roboto', sans-serif;
     position: relative;
-    min-height: 105vh;
+    min-height: 110vh;
     color: rgb(255,250, 250);
 }
 
@@ -19,6 +19,15 @@ body{
 
 h1{
     font-family: 'Luckiest Guy', cursive;
+}
+
+h2{
+  color: rgb(255, 195, 11);
+}
+
+.instructions{
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .github{
@@ -54,9 +63,12 @@ h1{
     background-color: #B3E5FC;
 }
 
-.power-pellet{
-    background-color: rgb(189, 15, 12);
-    border-radius: 20px;
+.power-pellet {
+  width:3em;
+  height:2.5em;
+  background-color:  #c20e2b;
+  box-shadow: inset 0.2em -0.2em  #9b0b22;
+  border-radius: 2.5em 2.5em 4em 4em;
 }
 
 /* GHOST */
@@ -66,69 +78,7 @@ h1{
     width: 60px;
     border-top-left-radius: 70px;
     border-top-right-radius: 70px;
-    /* animation: moveForward 5s linear infinite, colorSwap 0.5s linear infinite; */
   }
-  
-    /*****NOTE TO SELF: Eyes and pupils have a problem when top and left are used. */
-    /* using these for eyes */
-    /* .ghost::before, .ghost::after {
-      content: "";
-      position: absolute;
-      background: white;
-      height: 10px;
-      width: 8px;
-      border-radius: 100%;
-      top: 500px;
-      left: 4px;
-    }
-
-    .ghost::after {
-      left: 18px;
-    } */
-
-    /* Pupils */
-  /* .eyes::before, .eyes::after {
-    content: "";
-    position: absolute;
-    background: blue;
-    height: 5px;
-    width: 5px;
-    border-radius: 100%;
-    top: 25px;
-    left: 4px;
-    z-index: 99;
-    animation: peeperLeft 0.7s linear infinite;
-  }
-
-    .eyes::after {
-      left: 30px;
-      animation: peeperRight 0.7s linear infinite;
-    } */
-
-  /* .skirt {
-    position: absolute;
-    height: 0;
-    width: 0;
-    border: solid 10px #333;
-    border-top-color: transparent;
-    bottom: -10px;
-  } */
-    /* .skirt::after, .skirt::before {
-      content: "";
-      position: absolute;
-      height: 0;
-      width: 0;
-      border: solid 10px #333;
-      border-top-color: transparent;
-      bottom: -10px;
-      left: 10px;
-    }
-    .skirt::after {
-      border-color: #333;
-      border-top-color: transparent;
-      bottom: -10px;
-      left: 30px;
-    } */
 
 .blinky{
     background-color: red;
@@ -151,8 +101,8 @@ h1{
 }
 
 .scared-ghost{
-    background-color: blue;
-    border: 0px;
+  border: 0px;
+  animation: colorSwap 1.25s linear infinite; 
 }
 
 /* PACMAN */
@@ -179,7 +129,6 @@ h1{
         border-top-color: transparent;
         animation: mouthBottom 0.7s ease infinite;
   }
-
 
 .reset {
     background-color: pink;
@@ -213,7 +162,7 @@ footer{
   }
 }
     
-      /* @keyframes peeperLeft {
+      @keyframes peeperLeft {
         0%, 100% {
           left: 5px;
         }
@@ -228,8 +177,8 @@ footer{
         }
     }
 
-      @keyframes colorSwap {
-        50% {
-        background: hotpink;
-        }
-    } */
+@keyframes colorSwap {
+  50% {
+    background-color: blue;
+  }
+} 

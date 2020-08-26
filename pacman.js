@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ghosts.forEach(ghost => {
         squares[ghost.currentIndex].classList.add(ghost.className);
         squares[ghost.currentIndex].classList.add('ghost');
-        // squares[pacmanCurrentIndex].classList.add('eyes');
+        squares[ghost.currentIndex].classList.add('eyes');
         // squares[pacmanCurrentIndex].classList.add('skirt');
     });
 
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // activateGhostScatterMode(graph, ghost, 40);
 
-        activateGhostChaseMode(graph, ghost, 8000);
+        activateGhostChaseMode(graph, ghost, 8000); //score 8000 and ghost stop
     }
 
     function scoreToLevel(playerScore){
@@ -406,7 +406,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             case 'clyde':
                 // chaseRandom(ghost, scoreParameter);
-                travelToCorner(graph, ghost, bottomLeftCornerLocation, bottomLeftCornerPath, scoreParameter);
+                // travelToCorner(graph, ghost, bottomLeftCornerLocation, bottomLeftCornerPath, scoreParameter);
+                chasePatrol(graph, ghost, scoreParameter);
                 break;
 
         }

@@ -63,8 +63,10 @@ August 20th 2020 | K.T.
         design of Pacman and Ghosts need further improvements
         game functionality like pacman auto movement could be examined. 
         blinking feature to alert players ghosts are going to be out of scared mode would be nice. 
+            //Blinking whole time for now
         pacman audio incorporating is a plus. 
         update cherry animations
+            //cherry has shape; need stem
         pacman movement incorporate hold button so no rapid button taps to move. 
 
         *During gameplay, game freezes for some reason occassionally. Need to investigate bugs in code. 
